@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #A61E2D;
+  --color-background: #FFF8F7;
+  --color-secondaryBg: #F9E4E5;
+  --color-chocolate: #6F4434;
+  --color-textColor: #3A3A3A;
+  --color-accentPink: #EFA8C1;
+
+  --font-heading: "Baloo 2", cursive, sans-serif;
+  --font-body: "Poppins", sans-serif;
+
+  --radius-20: 20px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-textColor);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-chocolate);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFF8F7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EFA8C1;
+  border-radius: 10px;
+  border: 3px solid #FFF8F7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A61E2D;
+}
+
+/* Glassmorphism custom classes */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.glass-nav {
+  background: rgba(255, 248, 247, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
