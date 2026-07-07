@@ -7,7 +7,7 @@ export const WhyChooseUs = () => {
     {
       title: "Premium Ingredients",
       icon: <Sparkles size={28} />,
-      description: "We use only the finest Belgian chocolates, organic flours, and fresh dairy to bake our masterpieces.",
+      description: "We use only the finest Belgian chocolates, premium ingredients, and fresh dairy to bake our masterpieces.",
       bgColor: "bg-primary/5 text-primary",
     },
     {

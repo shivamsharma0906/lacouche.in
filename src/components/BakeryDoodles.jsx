@@ -81,7 +81,7 @@ export const BakeryDoodles = () => {
   ];
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 hidden md:block">
       {items.map((item, idx) => (
         <motion.div
           key={idx}
@@ -93,7 +93,8 @@ export const BakeryDoodles = () => {
             left: item.left,
             right: item.right,
             y: item.yTransform,
-            rotate: item.rTransform
+            rotate: item.rTransform,
+            willChange: "transform"
           }}
         >
           {item.component}

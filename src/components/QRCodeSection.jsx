@@ -122,9 +122,9 @@ export const QRCodeSection = () => {
 
                 {/* Laser scan line simulation */}
                 <motion.div 
-                  className="absolute left-0 right-0 h-[2px] bg-primary/70 z-10"
+                  className="absolute left-0 right-0 h-[2px] bg-primary/70 z-10 top-0"
                   animate={{ 
-                    top: ["8%", "92%", "8%"] 
+                    y: ["16px", "160px", "16px"] 
                   }}
                   transition={{ 
                     duration: 3, 

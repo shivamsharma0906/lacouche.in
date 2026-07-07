@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import BakeryDoodles from './BakeryDoodles';
 
 import cakeSweetBloom from '../assets/cake_sweet_bloom.png';
@@ -16,9 +16,17 @@ export const Hero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % heroImages.length);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [currentIdx]);
+
+  const handleNext = () => {
+    setCurrentIdx((prev) => (prev + 1) % heroImages.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIdx((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -125,37 +133,72 @@ export const Hero = () => {
             <div className="absolute inset-2 rounded-full border-2 border-dashed border-primary/20 rotate-12 pointer-events-none" />
             
             {/* Main Rounded Image Container */}
-            <div className="relative w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-4 border-white transform hover:rotate-1 transition-transform duration-500">
-              <AnimatePresence mode="wait">
-                <motion.img 
-                  key={currentIdx}
-                  src={heroImages[currentIdx]} 
-                  alt="La Couche Handcrafted Cake" 
-                  className="w-full h-full object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  loading="eager"
+            <div className="relative w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-4 border-white transform hover:rotate-1 transition-transform duration-500 group/image">
+              {heroImages.map((src, idx) => (
+                <motion.img
+                  key={idx}
+                  src={src}
+                  alt="La Couche Handcrafted Cake"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ 
+                    opacity: idx === currentIdx ? 1 : 0,
+                    scale: idx === currentIdx ? 1 : 1.05,
+                  }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  style={{ 
+                    zIndex: idx === currentIdx ? 10 : 0,
+                    pointerEvents: idx === currentIdx ? "auto" : "none"
+                  }}
                 />
-              </AnimatePresence>
+              ))}
+
+              {/* Navigation Arrows */}
+              <button 
+                onClick={handlePrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white text-chocolate border border-primary/10 shadow-md flex items-center justify-center md:opacity-0 md:group-hover/image:opacity-100 opacity-80 focus:opacity-100 transition-opacity duration-300 pointer-events-auto cursor-pointer"
+                aria-label="Previous cake"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button 
+                onClick={handleNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white text-chocolate border border-primary/10 shadow-md flex items-center justify-center md:opacity-0 md:group-hover/image:opacity-100 opacity-80 focus:opacity-100 transition-opacity duration-300 pointer-events-auto cursor-pointer"
+                aria-label="Next cake"
+              >
+                <ChevronRight size={16} />
+              </button>
+
+              {/* Pagination Dots */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 pointer-events-auto">
+                {heroImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIdx(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      idx === currentIdx ? 'w-5 bg-primary' : 'w-1.5 bg-white/60 hover:bg-white'
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
             
             {/* Mini Floating Badges */}
             <motion.div 
-              className="absolute md:-top-4 md:-right-4 top-2 right-2 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-xl sm:rounded-2xl shadow-lg border border-primary/5 flex items-center gap-1.5 sm:gap-2 scale-90 sm:scale-100"
+              className="absolute md:-top-4 md:-right-4 top-2 right-2 bg-white px-3 py-2 rounded-xl sm:rounded-2xl shadow-lg border border-primary/10 flex items-center gap-1.5 sm:gap-2 scale-90 sm:scale-100 will-change-transform z-20"
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
               <span className="text-xl">🎂</span>
               <div className="text-left">
-                <p className="text-[10px] text-chocolate/50 font-bold uppercase tracking-wider leading-none">100% Organic</p>
+                <p className="text-[10px] text-chocolate/50 font-bold uppercase tracking-wider leading-none">Baked Daily</p>
                 <p className="text-xs font-bold text-chocolate leading-tight">Handmade</p>
               </div>
             </motion.div>
 
             <motion.div 
-              className="absolute md:-bottom-4 md:-left-4 bottom-2 left-2 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-xl sm:rounded-2xl shadow-lg border border-primary/5 flex items-center gap-1.5 sm:gap-2 scale-90 sm:scale-100"
+              className="absolute md:-bottom-4 md:-left-4 bottom-2 left-2 bg-white px-3 py-2 rounded-xl sm:rounded-2xl shadow-lg border border-primary/10 flex items-center gap-1.5 sm:gap-2 scale-90 sm:scale-100 will-change-transform z-20"
               animate={{ y: [0, 6, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             >

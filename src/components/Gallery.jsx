@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageSquare, Heart, Sparkles } from 'lucide-react';
 
 // User Custom Cakes & Products
@@ -149,50 +149,47 @@ export const Gallery = () => {
           ))}
         </div>
 
-        {/* Pinterest Staggered Columns Layout with Layout Animations */}
-        <LayoutGroup>
-          <motion.div 
-            layout 
-            className="columns-2 md:columns-3 lg:columns-4 gap-4 md:gap-6 space-y-4 md:space-y-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredImages.map((img) => (
-                <motion.div
-                  key={img.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  className={`relative break-inside-avoid w-full ${img.aspect} rounded-20 overflow-hidden shadow-md hover:shadow-xl border border-primary/5 group cursor-pointer bg-white`}
-                  onClick={() => setSelectedImage(img)}
+        {/* Pinterest Staggered Columns Layout */}
+        <motion.div 
+          className="columns-2 md:columns-3 lg:columns-4 gap-4 md:gap-6 space-y-4 md:space-y-6"
+        >
+          <AnimatePresence>
+            {filteredImages.map((img) => (
+              <motion.div
+                key={img.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className={`relative break-inside-avoid w-full ${img.aspect} rounded-20 overflow-hidden shadow-md hover:shadow-xl border border-primary/5 group cursor-pointer bg-white`}
+                onClick={() => setSelectedImage(img)}
+              >
+                {/* Image */}
+                <img 
+                  src={img.src} 
+                  alt={img.alt} 
+                  className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+
+                {/* Top-Left Category Badge */}
+                <div className="absolute top-4 left-4 bg-white py-1 px-3.5 rounded-full text-[10px] font-bold text-chocolate shadow-sm border border-primary/5 pointer-events-none">
+                  {img.badge}
+                </div>
+
+                {/* Heart / Like Micro-interaction */}
+                <button
+                  onClick={(e) => toggleLike(e, img.id)}
+                  className="absolute top-3.5 right-4 bg-white p-2 rounded-full text-chocolate shadow-sm border border-primary/5 hover:scale-110 transition-transform duration-200"
+                  aria-label="Like creation"
                 >
-                  {/* Image */}
-                  <img 
-                    src={img.src} 
-                    alt={img.alt} 
-                    className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-105"
-                    loading="lazy"
+                  <Heart 
+                    size={14} 
+                    className={`transition-colors duration-300 ${
+                      likedItems[img.id] ? 'fill-primary text-primary' : 'text-textColor/70'
+                    }`} 
                   />
-
-                  {/* Top-Left Category Badge */}
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm py-1 px-3.5 rounded-full text-[10px] font-bold text-chocolate shadow-sm border border-primary/5 pointer-events-none">
-                    {img.badge}
-                  </div>
-
-                  {/* Heart / Like Micro-interaction */}
-                  <button
-                    onClick={(e) => toggleLike(e, img.id)}
-                    className="absolute top-3.5 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-chocolate shadow-sm border border-primary/5 hover:scale-110 transition-transform duration-200"
-                    aria-label="Like creation"
-                  >
-                    <Heart 
-                      size={14} 
-                      className={`transition-colors duration-300 ${
-                        likedItems[img.id] ? 'fill-primary text-primary' : 'text-textColor/70'
-                      }`} 
-                    />
-                  </button>
+                </button>
 
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-chocolate/85 via-chocolate/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -210,7 +207,6 @@ export const Gallery = () => {
               ))}
             </AnimatePresence>
           </motion.div>
-        </LayoutGroup>
 
         {/* Empty state if filter doesn't have items */}
         {filteredImages.length === 0 && (
