@@ -70,7 +70,7 @@ export const Hero = () => {
             variants={itemVariants}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6"
           >
-            <span>✨</span> Premium Home Bakery
+            <span>✨</span> Premium Commercial Kitchen
           </motion.div>
 
           {/* Large Title/Logo Display */}
@@ -193,7 +193,7 @@ export const Hero = () => {
               <span className="text-xl">🎂</span>
               <div className="text-left">
                 <p className="text-[10px] text-chocolate/50 font-bold uppercase tracking-wider leading-none">Baked Daily</p>
-                <p className="text-xs font-bold text-chocolate leading-tight">Handmade</p>
+                <p className="text-xs font-bold text-chocolate leading-tight">Chef Crafted</p>
               </div>
             </motion.div>
 
